@@ -53,7 +53,7 @@ int main(int argc, char** argv)
   ros::param::get("~angular_velocity_stddev", imu_stddev_angular_velocity);
   double imu_stddev_magnetic_field = imu_consts.DEFAULT_MAGNETIC_FIELD_STDDEV;
   ros::param::get("~magnetic_field_stddev", imu_stddev_magnetic_field);
-  double hz = 30.0;
+  double hz = 100;
   ros::param::get("~hz", hz);
 
   RtUsb9axisimuRosDriver driver(imu_port);
