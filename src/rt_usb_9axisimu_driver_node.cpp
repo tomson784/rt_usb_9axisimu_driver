@@ -61,6 +61,7 @@ int main(int argc, char** argv)
   driver.setImuStdDev(imu_stddev_linear_acceleration, imu_stddev_angular_velocity, imu_stddev_magnetic_field);
 
   ros::Time previous_time = ros::Time::now();
+  int reset_count = 0;
 
   if (driver.startCommunication())
   {
@@ -103,6 +104,10 @@ int main(int argc, char** argv)
         else
         {
           ROS_ERROR("readSensorData() returns false, please check your devices.\n");
+          reset_count++;
+          if (reset_count > 10){
+            return 0;
+          }
         }
       }
     }
@@ -111,6 +116,10 @@ int main(int argc, char** argv)
   else
   {
     ROS_ERROR("Error opening sensor device, please re-check your devices.\n");
+    reset_count++;
+    if (reset_count > 10){
+      return 0;
+    }
   }
 
   ROS_INFO("Shutting down RT imu driver complete.\n");
